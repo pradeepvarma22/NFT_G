@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/94.png",
+    "tokenId": 94,
+    "name": "vIP #94",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "hash"
+        },
+        {
+            "trait_type": "background",
+            "value": "green"
+        },
+        {
+            "trait_type": "body",
+            "value": "yellow"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "pink_tongue"
+        }
+    ]
+}

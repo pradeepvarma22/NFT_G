@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/98.png",
+    "tokenId": 98,
+    "name": "vIP #98",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "square"
+        },
+        {
+            "trait_type": "background",
+            "value": "purple"
+        },
+        {
+            "trait_type": "body",
+            "value": "sky_blue"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "pink_tongue"
+        }
+    ]
+}

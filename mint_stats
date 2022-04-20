@@ -1,0 +1,39 @@
+{
+    "background": {
+        "circle": 0,
+        "hash": 0,
+        "line": 0,
+        "square": 0,
+        "star": 0
+    },
+    "body": {
+        "dark_blue": 0,
+        "light_brown": 0,
+        "orange": 0,
+        "sky_blue": 0,
+        "yellow": 0
+    },
+    "head": {
+        "blue": 0,
+        "green": 0,
+        "maroon": 0,
+        "purple": 0,
+        "voilet": 0
+    },
+    "mouth": {
+        "blue": 0,
+        "green": 0,
+        "maroon": 0,
+        "pink_tongue": 0,
+        "purple": 0,
+        "red_tongue": 0,
+        "voilet": 0
+    },
+    "eyes": {
+        "blue": 0,
+        "green": 0,
+        "maroon": 0,
+        "purple": 0,
+        "voilet": 0
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/91.png",
+    "tokenId": 91,
+    "name": "vIP #91",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "hash"
+        },
+        {
+            "trait_type": "background",
+            "value": "maroon"
+        },
+        {
+            "trait_type": "body",
+            "value": "orange"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "red_tongue"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/83.png",
+    "tokenId": 83,
+    "name": "vIP #83",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "line"
+        },
+        {
+            "trait_type": "background",
+            "value": "voilet"
+        },
+        {
+            "trait_type": "body",
+            "value": "light_brown"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "red_tongue"
+        }
+    ]
+}

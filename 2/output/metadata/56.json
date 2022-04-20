@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/56.png",
+    "tokenId": 56,
+    "name": "vIP #56",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "line"
+        },
+        {
+            "trait_type": "background",
+            "value": "maroon"
+        },
+        {
+            "trait_type": "body",
+            "value": "dark_blue"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "pink_tongue"
+        }
+    ]
+}

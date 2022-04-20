@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/61.png",
+    "tokenId": 61,
+    "name": "vIP #61",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "star"
+        },
+        {
+            "trait_type": "background",
+            "value": "maroon"
+        },
+        {
+            "trait_type": "body",
+            "value": "sky_blue"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "pink_tongue"
+        }
+    ]
+}

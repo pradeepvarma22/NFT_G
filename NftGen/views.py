@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from NftGen.models import User
 import PIL
+from config.settings import BASE_DIR
+
 from django.http import HttpResponse,HttpResponseRedirect
 from django.http import FileResponse
 from django.urls import reverse
@@ -41,42 +43,45 @@ PINATA_JWT = keys['PINATA']
 img_file_list = [] 
 meta_file_list = []
 gen_imgs = {}
+user_d = {}
+
 
 # Create your views here.
 def loginView(request):
     if request.POST:
         walletAddress=request.POST.get('address')
-        user = User.objects.get_or_create(walletAddress = walletAddress)
-        user.save()
+        try:
+            user = User.objects.get(walletAddress = walletAddress)
+        except:
+            user = User.objects.create(walletAddress = walletAddress)
+            user.save()
         request.session['walletAddress'] = walletAddress
-        return redirect('home')
+        return redirect('LayerGet')
 
     else:
         return render(request,'login.html')
 
 
-def Home(request):
 
     context = {
-        'moralisId':request.session.get('moralisAddress'),
         'walletAddress':request.session.get('walletAddress')
     }
     return render(request,'home.html',context)
 
 
 
-
 def add_proj(request):
     tuser=User.objects.get(walletAddress=request.session.get('walletAddress'))
+
     temp = ProjectDesc()
     temp.user = tuser
     temp.proj_name = request.POST.get('projname')
     temp.total = request.POST.get('total')
-    LayerData = LayersModel.objects.filter(user=tuser)
-
-    context = { 'proj':temp.proj_name,'total':temp.total }
+    temp.proj_desc = request.POST.get('desc')
     temp.save()
-    return HttpResponseRedirect(reverse(('LayerGet'),kwargs=context))
+    return HttpResponseRedirect(reverse('LayerGet'))
+
+
 
 def uploadnft(request):
     nstorage = {}
@@ -159,6 +164,7 @@ def generate_mint_stats(all_images, mapping):
     json_pretty = json.dumps(stats, sort_keys=True, indent=4)
 
     return json_pretty
+
     
 
 def homeView(request):
@@ -174,16 +180,19 @@ def setrarity(request,k):
 
 def LayerGet(request):
 
-    mainuser = User.objects.get(walletAddress=request.session.get('walletAddress'))
-    tuser=User.objects.get(walletAddress=mainuser)
+    tuser = User.objects.get(walletAddress=request.session.get('walletAddress'))
+    request.session['user_id'] =tuser.id
     layoutDataF = LayersModel.objects.filter(user=tuser)
     imagesObjects = Image.objects.filter(user=tuser)
-    t =1 
-    for l in layoutDataF:
-        t *= int(l.img_num)
-    d = f('.\images')
-    print(d)
-    context={'layoutDataV':layoutDataF,'imagesObjects':imagesObjects, 'max':t}
+    print(ProjectDesc.objects.all())
+    if not ProjectDesc.objects.all():
+        projObjects = {}   
+    else:
+        projObjects = ProjectDesc.objects.filter(user=tuser)
+        
+    print(projObjects)
+   
+    context={'layoutDataV':layoutDataF,'imagesObjects':imagesObjects,'proj':projObjects}
     return render(request,'layout.html',context)
 
 
@@ -201,54 +210,72 @@ def LayerPost(request):
     return redirect('LayerGet')
 
 
+def setrarity(request,k):
+    img_obj = Image.objects.get(id = k)
+    img_obj.rarity = request.POST.get('rarity')
+    img_obj.save()
+    return HttpResponseRedirect(reverse('LayerGet'))
+
+
+
+
 def uploadImage(request,pkk):
-    mainuser = User.objects.get(walletAddress=request.session.get('walletAddress'))
-    tuser=User.objects.get(walletAddress=mainuser)
+
+    tuser=User.objects.get(walletAddress=request.session.get('walletAddress'))
+
+    
+    
     files = request.FILES.getlist('allimages')  
     img_num = len(files)
-    #fss = FileSystemStorage()
-    #print(list(files))
+
     tLayer = LayersModel.objects.get(id=pkk)
+    #layerPath = BASE_DIR + '/'+ str(tuser.id) + '/images/' + str(tLayer)
+
     tLayer.img_num = str(img_num)
     tLayer.save()
+
     index = 1
     for f in files:
         a = Image()
         a.layer = tLayer
         a.user = tuser
-        #a.name = f.name
         a.image = f
         a.save()
+        #a.save(layerPath)
         index+=1
     
     return redirect('LayerGet')
 
    
 def GenerateImg(request):
-    mainuser = User.objects.get(walletAddress=request.session.get('walletAddress'))
-    tuser=User.objects.get(walletAddress=mainuser)
+    tuser=User.objects.get(walletAddress=request.session.get('walletAddress'))
+
     layoutDataF = LayersModel.objects.filter(user=tuser)
-    po = ProjectDesc.objects.get(user=request.user)
-    print(po.proj_name)
+
+    po = ProjectDesc.objects.get(user=tuser)
+
+    
     tot = po.total
-    tot = int(tot)
     proj = po.proj_name
+    tot = int(tot)
+
+
     global gen_imgs
+    global user_d
+
     td = {}
-    d = f('.\images')
+    user_d[tuser.id] = {}
+    
+    d = f(BASE_DIR + '/' + str(tuser.id) +'/images')
     td ={}
     for l in layoutDataF:
         imagesObjects = Image.objects.filter(layer=l)
-        #print(imagesObjects)
         l = str(l)
         td[l] = []
         
         for i in imagesObjects:
-            #print(i.rarity)
             td[l].append(float(i.rarity))
-    #print(d)
-    #print(td)
-    #get_random_selection(d,td)
+
     images = {}
     for x in range(1, tot+1):
         dup_image_check = True
@@ -274,11 +301,11 @@ def GenerateImg(request):
         
         image[x] = output
         images.update(image)
-    
+        
     gen_imgs = images
-    generate_image_helper(images,proj)
+    user_d[tuser.id]['gen_imgs'] = images
+    generate_image_helper(images,proj,str(tuser.id))
     return redirect('LayerGet')
-
 
 def f(path):
 
@@ -291,8 +318,11 @@ def f(path):
     return d
 
 
+
 def get_random_selection(attributes,rarity):
     temp = {}
+    print(attributes)
+    print(rarity)
     for i in attributes.keys():
         # get values
         values = attributes[i]
@@ -304,18 +334,18 @@ def get_random_selection(attributes,rarity):
     return temp
 
 
-def generate_image_helper(all_images,project_name):
+def generate_image_helper(all_images,project_name, userid):
 
     file_list = []
+    global user_d
     global img_file_list
     global meta_file_list
-    path = BASE_DIR + '/output'
+
+    base_img_path =  BASE_DIR + '/'+ userid + '/images'
+    path = BASE_DIR + '/'+ userid + '/output'
     img_path = path+'/images'
     meta_path = path+'/metadata'
-    try:
-        os.mkdir(path)
-    except:
-        pass
+
     try:
         os.mkdir(img_path)
     except:
@@ -339,17 +369,17 @@ def generate_image_helper(all_images,project_name):
 
         # if only 2 images to combine - single pass
         if len(v) <= 2:
-            im1 = PIL.Image.open(f'./images/{directories[0]}/{imgnames[0]}.png').convert('RGBA')
-            im2 = PIL.Image.open(f'./images/{directories[1]}/{imgnames[1]}.png').convert('RGBA')
+            im1 = PIL.Image.open(f'{base_img_path}/{directories[0]}/{imgnames[0]}.png').convert('RGBA')
+            im2 = PIL.Image.open(f'{base_img_path}/{directories[1]}/{imgnames[1]}.png').convert('RGBA')
             com = PIL.Image.alpha_composite(im1, im2)
         # if > 2 images to combine - multi pass
         else:
-            im1 = PIL.Image.open(f'./images/{directories[0]}/{imgnames[0]}.png').convert('RGBA')
-            im2 = PIL.Image.open(f'./images/{directories[1]}/{imgnames[1]}.png').convert('RGBA')
+            im1 = PIL.Image.open(f'{base_img_path}/{directories[0]}/{imgnames[0]}.png').convert('RGBA')
+            im2 = PIL.Image.open(f'{base_img_path}/{directories[1]}/{imgnames[1]}.png').convert('RGBA')
             com = PIL.Image.alpha_composite(im1, im2)
             counter = 2
             while counter < len(v):
-                im = PIL.Image.open(f'./images/{directories[counter]}/{imgnames[counter]}.png').convert('RGBA')
+                im = PIL.Image.open(f'{base_img_path}/{directories[counter]}/{imgnames[counter]}.png').convert('RGBA')
                 com = PIL.Image.alpha_composite(com, im)
                 counter += 1
         
@@ -373,10 +403,13 @@ def generate_image_helper(all_images,project_name):
         with open(meta_file, 'w') as outfile:
             json.dump(token, outfile, indent=4)
     
-    make_gif(img_path)
+    user_d[int(userid)]['meta_files'] = meta_file_list
+    user_d[int(userid)]['img_files'] = img_file_list
+
+    make_gif(img_path,userid)
     #subprocess.call(['chmod', '0o777', path])
     try:
-        zip_dir(path,'result')
+        zip_dir(path,BASE_DIR + '/'+ userid + '/result')
     except:
         pass
     
@@ -400,9 +433,22 @@ def download(request):
     response['Content-Disposition'] = 'attachment; filename="%s"' % 'results.zip'
     return response
 
-def make_gif(frame_folder):
-
+def make_gif(frame_folder,userid):
+    opdir = BASE_DIR + '/' + userid
     frames = [PIL.Image.open(image) for image in glob.glob(f"{frame_folder}/*.PNG")]
     frame_one = frames[0]
-    frame_one.save("./output/my_awesome.gif", format="GIF", append_images=frames,
+    frame_one.save(opdir + "/output/my_awesome.gif", format="GIF", append_images=frames,
                save_all=True, duration=100, loop=0)
+
+
+def edit_proj(request, pk):
+    
+    tuser=User.objects.get(walletAddress=request.session.get('walletAddress'))
+
+    temp = ProjectDesc.objects.get(id=pk)
+    temp.user = tuser
+    temp.proj_name = request.POST.get('projname')
+    temp.total = request.POST.get('total')
+    temp.proj_desc = request.POST.get('desc')
+    temp.save()
+    return HttpResponseRedirect(reverse('LayerGet'))

@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/21.png",
+    "tokenId": 21,
+    "name": "vIP #21",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "line"
+        },
+        {
+            "trait_type": "background",
+            "value": "purple"
+        },
+        {
+            "trait_type": "body",
+            "value": "orange"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "red_tongue"
+        }
+    ]
+}

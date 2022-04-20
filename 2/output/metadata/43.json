@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/bafybeihp6jco7koux7xbzw7yjkzih4h2gyisejiq3cmckk25wex7x4uhna/43.png",
+    "tokenId": 43,
+    "name": "vIP #43",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "hash"
+        },
+        {
+            "trait_type": "background",
+            "value": "blue"
+        },
+        {
+            "trait_type": "body",
+            "value": "light_brown"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "red_tongue"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeiexp4pmoul4kxu5undrffbzlupdfk4ozfnjeggenlohf75sptb3r4/79.png",
+    "tokenId": 79,
+    "name": "Varma #79",
+    "attributes": [
+        {
+            "trait_type": "background",
+            "value": "purple"
+        },
+        {
+            "trait_type": "body",
+            "value": "sky_blue"
+        },
+        {
+            "trait_type": "eyes",
+            "value": "hash"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "pink_tongue"
+        }
+    ]
+}

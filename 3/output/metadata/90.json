@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeiaisql6fjujnohdhwmbhmn6x3n2eknisrt72cf2vmnk2xrh6wr6vy/90.png",
+    "tokenId": 90,
+    "name": "varma #90",
+    "attributes": [
+        {
+            "trait_type": "head",
+            "value": "circle"
+        },
+        {
+            "trait_type": "background",
+            "value": "purple"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "red_tongue"
+        },
+        {
+            "trait_type": "body",
+            "value": "sky_blue"
+        }
+    ]
+}

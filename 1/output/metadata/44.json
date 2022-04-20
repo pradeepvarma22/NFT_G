@@ -1,0 +1,23 @@
+{
+    "image": "ipfs://bafybeiexp4pmoul4kxu5undrffbzlupdfk4ozfnjeggenlohf75sptb3r4/44.png",
+    "tokenId": 44,
+    "name": "Varma #44",
+    "attributes": [
+        {
+            "trait_type": "background",
+            "value": "maroon"
+        },
+        {
+            "trait_type": "body",
+            "value": "orange"
+        },
+        {
+            "trait_type": "eyes",
+            "value": "star"
+        },
+        {
+            "trait_type": "mouth",
+            "value": "red_tongue"
+        }
+    ]
+}

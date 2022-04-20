@@ -39,10 +39,13 @@ class Image(models.Model):
     def __str__(self):
         return self.layer.layer_name
 
+
 class ProjectDesc(models.Model):
     user = models.ForeignKey(User, null=True, on_delete= models.SET_NULL)
     proj_name = models.CharField(max_length=255,null=True,blank=True)
+    proj_desc = models.TextField(null=True,blank=True)
     total = models.CharField(max_length=6,null=True,blank=True)
+    stats =  models.TextField(null=True,blank=True)
     img_hash = models.CharField(max_length=255,null=True,blank=True)
     meta_hash = models.CharField(max_length=255,null=True,blank=True)
     def __str__(self):
